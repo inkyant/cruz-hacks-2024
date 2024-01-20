@@ -2,3 +2,11 @@ assemblyai
 openai
 bs4
 lxml
+assemblyai
+pyktok
+browser-cookie3
+numpy
+pandas
+requests
+selenium
+streamlit
