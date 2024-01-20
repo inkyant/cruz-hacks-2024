@@ -16,13 +16,14 @@ def query_snopes(query):
         
         title = article.select('.article_title')[0]
         
-        #TODO: fix byline \n
         byline = article.select('.article_byline')[0]
+
+        byline = re.match(r'["\']\\n[\s]+(.+?)\s\s\s', repr(byline.text)).group(1)
 
         link_wrapper = article.select('.outer_article_link_wrapper')[0]
         link = re.match(r'log_search\(\'click\',\'(.+)\'', link_wrapper['onclick'])
 
-        articles.append({'title': title.text, 'byline': byline.text, 'link': 'https://snopes.com/' + link.group(1)})
+        articles.append({'title': title.text, 'byline': byline, 'link': 'https://snopes.com/' + link.group(1)})
     
     return articles
 
@@ -32,5 +33,10 @@ if __name__ == '__main__':
 
     result = query_snopes("shoes")
 
-    print(result)
+    for art in result:
+        print(art['title'])
+        print(art['byline'])
+        print(art['link'])
+        print()
+
 
