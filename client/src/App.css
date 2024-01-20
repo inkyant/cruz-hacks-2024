@@ -58,7 +58,7 @@ body {
   align-items: center;
   justify-content: center;
   width:50%;
-  background-color:#845EC2;
+  background-color:rgba(188, 103, 213,0.5);
   border-radius: 15px;
 }
 
@@ -93,7 +93,6 @@ body {
   padding-top:0;
 }
 
-/* Very light scaling for our illustration */
 .title {
   color: white;
   font-family: Optima, sans-serif;
@@ -105,18 +104,6 @@ body {
   padding-left: 50px;
   padding-right: 50px;
 
-}
-
-/* Very light scaling for our illustration */
-.illustration {
-  max-width: 100%;
-  max-height: var(--image-max-width);
-  margin-top: var(--image-margin);
-}
-
-/* Instructions */
-.instructions {
-  margin: 1rem auto 0;
 }
 
 
