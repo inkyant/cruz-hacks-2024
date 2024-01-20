@@ -6,10 +6,26 @@ import React, { useState } from "react";
 function App() {
 
   const [urlString, setUrlString] = useState("");
+
   const [infoString, setInfoString] = useState("");
 
   function handleClick(url) {
-    setInfoString("your url: " + url)
+
+    fetch("http://localhost:5000/api/fact-check", {
+      method: "POST",
+      body: JSON.stringify({
+        url: url,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      setInfoString(data)
+    })
+    .catch(err => console.log(err));;
+
   }
 
   return (
