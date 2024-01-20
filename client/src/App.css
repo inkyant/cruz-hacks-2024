@@ -58,7 +58,7 @@ body {
   align-items: center;
   justify-content: center;
   width:50%;
-  background-color:#bc67d5;
+  background-color:rgba(188, 103, 213,0.5);
   border-radius: 15px;
 }
 
