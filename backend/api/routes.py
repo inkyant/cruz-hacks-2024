@@ -6,7 +6,8 @@ routes = Blueprint("routes", __name__)
 
 @routes.route("/api/fact-check", methods=['POST'])
 def fact_check():
-    url = request.form.get("url")
+    url = request.get_json()
+
     if not url:
         return {}
     

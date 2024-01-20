@@ -13,18 +13,16 @@ function App() {
 
     fetch("http://localhost:5000/api/fact-check", {
       method: "POST",
-      body: JSON.stringify({
-        url: url,
-      }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
+      'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify(url)
     })
     .then(res => res.json())
     .then(data => {
-      setInfoString(data)
+      setInfoString(data.summary)
     })
-    .catch(err => console.log(err));;
+    .catch(err => console.log(err));
 
   }
 
