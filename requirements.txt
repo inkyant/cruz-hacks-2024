@@ -1,8 +1,7 @@
 assemblyai
 openai
 bs4
-lxml
-assemblyai
+lxml 
 pyktok
 browser-cookie3
 numpy
