@@ -1,2 +1,4 @@
 assemblyai
 openai
+bs4
+lxml
