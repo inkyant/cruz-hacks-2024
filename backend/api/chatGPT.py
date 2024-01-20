@@ -1,5 +1,5 @@
 import re
-from api_keys import OPEN_AI_API_KEY
+from .api_keys import OPEN_AI_API_KEY
 from openai import OpenAI
 
 client = OpenAI(api_key=OPEN_AI_API_KEY)
@@ -16,10 +16,12 @@ Additionally, after those three sentences, create a line break and type \"Search
         stream=False,
     )
 
-    print(response.choices[0].message)
-    for res in response.choices:
-        if (re.match(r'unable to provide information', res.message.content or "") is None):
-            return res.message.content
+    # print(response.choices[0].message.content)
+    if response.choices:
+        return response.choices[0].message.content
+    # for res in response.choices:
+    #     if (re.match(r'unable to provide information', res.message.content or "") is None):
+    #         return res.message.content
 
 
 def get_article(transcript: str, articles: str):

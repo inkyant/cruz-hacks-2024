@@ -1,4 +1,4 @@
-from api_keys import ASM_AI_API_KEY
+from backend.api.api_keys import ASM_AI_API_KEY
 import assemblyai as aai
 
 aai.settings.api_key = ASM_AI_API_KEY

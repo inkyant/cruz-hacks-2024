@@ -1,10 +1,10 @@
 
-from captions import get_captions
-from chatGPT import get_summary
+from backend.api.captions import get_captions
+from backend.api.chatGPT import get_summary
 
 if __name__ == '__main__':
 
-    url = ""
+    url = "https://www.tiktok.com/@davisfang/video/7054881320974945537"
 
     transcript = get_captions(url)
 

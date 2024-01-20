@@ -2,6 +2,7 @@ api_keys.py
 __pycache__
 venv
 .DS_Store
+*.mp4
 
 # dependencies
 node_modules

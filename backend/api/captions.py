@@ -1,4 +1,4 @@
-from api_keys import ASM_AI_API_KEY
+from .api_keys import ASM_AI_API_KEY
 import assemblyai as aai
 import pyktok as pyk
 import os
@@ -7,10 +7,9 @@ import re
 
 pyk.specify_browser('chrome')
 aai.settings.api_key = ASM_AI_API_KEY
+pattern = r"https://(?:www\.)?tiktok.com/([^?]+)"
 
 def get_captions(url):
-    pattern = r"https://(?:www.)?tiktok.com/(.+)"
-
     cwd = os.getcwd()
     video_path = ""
 
