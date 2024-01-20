@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from "react";
 
 function ent() {
   var x = document.getElementById("fname").value;
@@ -7,6 +8,9 @@ function ent() {
 }
 
 function App() {
+
+  const [urlString, setUrlString] = useState("a");
+
   return (
     <div className="App">
       <body>
@@ -14,24 +18,24 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
 
-        <div class="titlebx">
-          <h1 class="title">Mrs. Info</h1>
+        <div className="titlebx">
+          <h1 className="title">Mrs. Info</h1>
         </div>
 
-        <div class="wrapper">
-          <div class="content" role="main">
-          <div class="inbx">
-            <input type="text" id="fname" name="fname" value="" placeholder="TikTok Link.."/><br />
+        <div className="wrapper">
+          <div className="content" role="main">
+          <div className="inbx">
+            <input type="text" onChange={(e) => setUrlString(e.target.value)} id="fname" name="fname" value={urlString} placeholder="TikTok Link.."/><br />
             <button onclick={ent} >Enter</button>
           </div>
-          <div class="outbx">
-            <p class="outtxt" id="demo">hello this is the output area</p>
+          <div className="outbx">
+            <p className="outtxt" id="demo">hello this is the output area</p>
           </div>
           
           </div>
         </div>
 
-        <footer class="footer">
+        <footer className="footer">
       
         </footer>
       </body>
