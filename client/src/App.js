@@ -71,9 +71,9 @@ function App() {
             <input type="text" onChange={(e) => setUrlString(e.target.value)} id="fname" name="fname" value={urlString} placeholder="TikTok Link.."/><br />
             <button onClick={() => handleClick(urlString)} >{loading ? "Loading..." : "Enter"}</button>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', display: parseUrl(urlString) == "" ? 'none' : '' }}>
+          {/* <div style={{ display: 'flex', justifyContent: 'center', display: parseUrl(urlString) == "" ? 'none' : '' }}>
             <TikTokEmbed url={parseUrl(urlString)} width={325} />
-          </div>
+          </div> */}
           <div className="outbx" style={{display: infoString == "" ? "none" : ""}}>
             {loading ? <Loader/> : <p className="outtxt" id="demo">{infoString}</p>}
           </div>
