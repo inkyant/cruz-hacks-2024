@@ -3,6 +3,8 @@ __pycache__
 venv
 .DS_Store
 *.mp4
+*.csv
+frame*.jpg
 
 # dependencies
 node_modules

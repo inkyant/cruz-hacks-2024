@@ -1,3 +1,4 @@
+from .image_cap import video_caption
 from .api_keys import ASM_AI_API_KEY
 import assemblyai as aai
 import pyktok as pyk
@@ -31,8 +32,14 @@ def get_captions(url):
     transcriber = aai.Transcriber()
     metadata = dict()
     try:
+        
+        # get transcript of audio
         transcript_obj = transcriber.transcribe(video_path)
         transcript = transcript_obj.text
+
+        # get video transcript
+        video_transcript = video_caption(video_path)
+
         with open(csv_path) as file:
             csv_reader = csv.DictReader(file)
             for row in csv_reader:
@@ -43,4 +50,4 @@ def get_captions(url):
         os.remove(video_path)
     except FileNotFoundError:
         return None
-    return transcript, metadata
+    return transcript, video_transcript, metadata

@@ -14,11 +14,11 @@ def fact_check():
     if not url:
         return {}
     
-    transcript, metadata = get_captions(url)
+    transcript, video_transcript, metadata = get_captions(url)
     if not transcript:
         return {}
 
-    s = get_summary(transcript, metadata["description"], metadata["date"])
+    s = get_summary(transcript, video_transcript, metadata["description"], metadata["date"])
 
     print("\n" + "="*8)
     print(s)

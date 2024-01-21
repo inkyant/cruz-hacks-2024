@@ -11,3 +11,6 @@ selenium
 streamlit
 Flask
 Flask-Cors
+replicate
+opencv-python
+cloudinary
