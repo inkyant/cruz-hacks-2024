@@ -21,12 +21,12 @@ def get_captions(url):
         video_path = os.path.join(cwd, video_name + ".mp4")
         csv_path = os.path.join(cwd, video_name + ".csv")
     else:
-        return None
+        return None, None
     
     try:
         pyk.save_tiktok(url, True, csv_path)
     except TypeError:
-        return None
+        return None, None
 
     transcriber = aai.Transcriber()
     metadata = dict()
@@ -42,5 +42,5 @@ def get_captions(url):
         os.remove(csv_path)
         os.remove(video_path)
     except FileNotFoundError:
-        return None
+        return None, None
     return transcript, metadata
