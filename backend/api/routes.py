@@ -58,7 +58,7 @@ def fact_check():
         print("\n\n")
 
         if article_id is not None and article_id != -1:
-            article_selected = articles[article_id].title
+            article_selected = articles[article_id]["title"]
         
     return jsonify({"summary": match.group(1), "snopes": article_selected})
     
