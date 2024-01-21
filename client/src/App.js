@@ -1,7 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState } from "react";
+import { TikTokEmbed } from 'react-social-media-embed';
 
+
+function parseUrl(url) {
+  let match = url.match(/https:\/\/www.tiktok.com\/@.+?\/video\/\d+/g)
+  console.log(match)
+  if (match)
+    return match[0]
+  else
+    return ""
+}
 
 function App() {
 
@@ -47,6 +57,9 @@ function App() {
           <div className="inbx">
             <input type="text" onChange={(e) => setUrlString(e.target.value)} id="fname" name="fname" value={urlString} placeholder="TikTok Link.."/><br />
             <button onClick={() => handleClick(urlString)} >{loading ? "Loading..." : "Enter"}</button>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', display: parseUrl(urlString) == "" ? 'none' : '' }}>
+            <TikTokEmbed url={parseUrl(urlString)} width={325} />
           </div>
           <div className="outbx">
             <p className="outtxt" id="demo">{infoString}</p>
