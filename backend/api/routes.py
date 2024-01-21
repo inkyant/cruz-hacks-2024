@@ -14,6 +14,11 @@ def fact_check():
     transcript = get_captions(url)
     if not transcript:
         return {}
-    
-    summary = get_summary(transcript)
-    return jsonify({"summary": summary})
+
+    s = get_summary(transcript)
+    match = re.match(r'(.+?)\n\nSearch Terms:(.+)', s)
+    if (match is None):
+        print("Error on  match regex")
+        return jsonify({"summary": s, "terms": ""})
+    return jsonify({"summary": match.group(1), "terms": match.group(1)})
+

@@ -9,7 +9,11 @@ function App() {
 
   const [infoString, setInfoString] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   function handleClick(url) {
+
+    setLoading(true)
 
     fetch("http://localhost:5000/api/fact-check", {
       method: "POST",
@@ -21,6 +25,7 @@ function App() {
     .then(res => res.json())
     .then(data => {
       setInfoString(data.summary)
+      setLoading(false)
     })
     .catch(err => console.log(err));
 
@@ -41,7 +46,7 @@ function App() {
           <div className="content" role="main">
           <div className="inbx">
             <input type="text" onChange={(e) => setUrlString(e.target.value)} id="fname" name="fname" value={urlString} placeholder="TikTok Link.."/><br />
-            <button onClick={() => handleClick(urlString)} >Enter</button>
+            <button onClick={() => handleClick(urlString)} >{loading ? "Loading..." : "Enter"}</button>
           </div>
           <div className="outbx">
             <p className="outtxt" id="demo">{infoString}</p>
