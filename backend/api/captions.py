@@ -1,3 +1,4 @@
+import asyncio
 from .image_cap import video_caption
 from .api_keys import ASM_AI_API_KEY
 import assemblyai as aai
@@ -12,7 +13,7 @@ pyk.specify_browser('chrome')
 aai.settings.api_key = ASM_AI_API_KEY
 pattern = r"https://(?:www\.)?tiktok.com/([^?]+)"
 
-def get_captions(url):
+async def get_captions(url):
     cwd = os.getcwd()
     video_path = ""
 
@@ -34,11 +35,15 @@ def get_captions(url):
     try:
         
         # get transcript of audio
-        transcript_obj = transcriber.transcribe(video_path)
-        transcript = transcript_obj.text
+        async def transcribe():
+            return transcriber.transcribe(video_path).text
 
         # get video transcript
-        video_transcript = video_caption(video_path)
+        async def vid_transcribe():
+            return video_caption(video_path)
+        
+        transcript, video_transcript = await asyncio.gather(transcribe(), vid_transcribe())
+
 
         with open(csv_path) as file:
             csv_reader = csv.DictReader(file)

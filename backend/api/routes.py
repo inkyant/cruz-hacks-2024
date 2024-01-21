@@ -1,3 +1,4 @@
+import asyncio
 import re
 from flask import Blueprint, jsonify, request
 
@@ -14,7 +15,13 @@ def fact_check():
     if not url:
         return {}
     
-    transcript, video_transcript, metadata = get_captions(url)
+    transcript, video_transcript, metadata = None, None, None
+
+    try:
+        transcript, video_transcript, metadata = asyncio.get_running_loop().run_until_complete(get_captions(url))
+    except RuntimeError:
+        transcript, video_transcript, metadata = asyncio.run(get_captions(url))
+        
     if not transcript:
         return {}
 
