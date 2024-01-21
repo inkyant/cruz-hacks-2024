@@ -16,8 +16,7 @@ def query_snopes(query):
         title = article.select('.article_title')[0]
         
         byline = article.select('.article_byline')[0]
-
-        byline = re.match(r'["\']\\n[\s]+(.+?)\s\s\s', repr(byline.text)).group(1)
+        byline = re.match(r'["\']\\n[\s]*(.+?)\s\s\s', repr(byline.text)).group(1)
 
         link_wrapper = article.select('.outer_article_link_wrapper')[0]
         link = re.match(r'log_search\(\'click\',\'(.+)\'', link_wrapper['onclick'])
