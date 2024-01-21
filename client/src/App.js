@@ -56,13 +56,13 @@ function App() {
 
   return (
     <div className="App">
+      <head>
+          <title>Miss Info</title>
+      </head>
       <body>
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
 
         <div className="titlebx">
-          <h1 className="title">Mrs. Info</h1>
+          <h1 className="title">Miss Info</h1>
         </div>
 
         <div className="wrapper">
