@@ -6,7 +6,15 @@ A web page that detects any misinformation present in TikTok videos using AI and
 
 # Usage
 
-Insert your OpenAI, AssemblyAI, Replicate, and CDN keys in [backend/api/api_keys.py](https://github.com/inkyant/cruz-hacks-2024/blob/main/backend/api/api_keys.py)
+Insert your OpenAI, AssemblyAI, Replicate, and CDN keys in [backend/api/api_keys.py](https://github.com/inkyant/cruz-hacks-2024/blob/main/backend/api/api_keys.py) with the following variables:
+```
+OPEN_AI_API_KEY = ""
+ASM_AI_API_KEY = ""
+REPLICATE_API_KEY = ""
+CDN_CLOUD_NAME = ""
+CDN_API_KEY = ""
+CDN_API_SECRET = ""
+```
 
 This project consists of two components: the React application for webpage rendering and the Flask application for running the LLM APIs and processing the TikTok video. Both components must be run for the web application to function.
 
