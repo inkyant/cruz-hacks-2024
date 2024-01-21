@@ -2,7 +2,19 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState } from "react";
 import { TikTokEmbed } from 'react-social-media-embed';
+import { RotatingLines } from "react-loader-spinner";
 
+function Loader() {
+  return(
+    <RotatingLines
+      strokeColor="grey"
+      strokeWidth='5'
+      animationDuration='0.75'
+      width='50'
+      visible={true}
+    />
+  )
+}
 
 function parseUrl(url) {
   let match = url.match(/https:\/\/www.tiktok.com\/@.+?\/video\/\d+/g)
@@ -62,7 +74,7 @@ function App() {
             <TikTokEmbed url={parseUrl(urlString)} width={325} />
           </div>
           <div className="outbx">
-            <p className="outtxt" id="demo">{infoString}</p>
+            {loading ? <Loader/> : <p className="outtxt" id="demo">{infoString}</p>}
           </div>
           
           </div>
