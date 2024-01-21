@@ -18,7 +18,7 @@ def fact_check():
     if not transcript:
         return {}
 
-    s = get_summary(transcript)
+    s = get_summary(transcript, metadata["description"], metadata["date"])
 
     print("\n" + "="*8)
     print(s)
@@ -60,5 +60,5 @@ def fact_check():
         if article_id is not None and article_id != -1:
             article_selected = articles[article_id].title
         
-    return jsonify({"summary": match.group(1), "snopes": article_selected, "description": metadata["description"], "date": metadata["date"]})
+    return jsonify({"summary": match.group(1), "snopes": article_selected})
     
