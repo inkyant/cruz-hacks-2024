@@ -74,7 +74,7 @@ function App() {
           <div style={{ display: 'flex', justifyContent: 'center', display: parseUrl(urlString) == "" ? 'none' : '' }}>
             <TikTokEmbed url={parseUrl(urlString)} width={325} />
           </div>
-          <div className="outbx">
+          <div className="outbx" style={{display: infoString == "" ? "none" : ""}}>
             {loading ? <Loader/> : <p className="outtxt" id="demo">{infoString}</p>}
           </div>
           <div className="outbx" style={{display: snopesString == "" ? "none" : ""}}>
@@ -83,10 +83,6 @@ function App() {
           
           </div>
         </div>
-
-        <footer className="footer">
-      
-        </footer>
       </body>
     </div>
   );
