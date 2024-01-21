@@ -30,6 +30,7 @@ function App() {
   const [urlString, setUrlString] = useState("");
 
   const [infoString, setInfoString] = useState("");
+  const [snopesString, setSnopesString] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -47,10 +48,10 @@ function App() {
     .then(res => res.json())
     .then(data => {
       setInfoString(data.summary)
+      setSnopesString(data.snopes)
       setLoading(false)
     })
     .catch(err => console.log(err));
-
   }
 
   return (
@@ -75,6 +76,9 @@ function App() {
           </div>
           <div className="outbx">
             {loading ? <Loader/> : <p className="outtxt" id="demo">{infoString}</p>}
+          </div>
+          <div className="outbx" style={{display: snopesString == "" ? "none" : ""}}>
+            <p className="outtxt">{snopesString}</p>
           </div>
           
           </div>
