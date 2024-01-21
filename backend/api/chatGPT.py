@@ -6,15 +6,19 @@ client = OpenAI(api_key=OPEN_AI_API_KEY)
 
 def get_summary(transcript):
 
-    prompt = """Imagine you are an independent body that has to release a short summary of misinformation if present within a video. The video transcript provided  below will be the video for which you will highlight any misinformation if present, in just 3 sentences.
+    prompt = """Imagine you are an independent body that has to release a short summary of misinformation present within a video. The video transcript provided  below will be the video for which you will highlight any misinformation present, in just 3 sentences.
 Additionally, after those three sentences, if there is misinformation present, create a line break and type \"Search Terms:\" and then exactly 7 search terms that could be used to get specific information about the topic. Do not type anything else on that line, and do not type this line if there is not a lot of misinformation. Only type one search query. Only type 7 words, do not include commas or multiple searches. For example:
-\"Search Terms: flat earth theory 2020 proven with gravity\""""
+\"Search Terms: flat earth theory 2020 proven with gravity\"\nHere is the transcript"""
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt + "\n" + transcript}],
         stream=False,
     )
+
+    print("="*8)
+    print(prompt + "\n" + transcript)
+    print("="*8)
 
     # print(response.choices[0].message.content)
     if response.choices:
