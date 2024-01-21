@@ -40,7 +40,7 @@ async def get_captions(url):
 
         # get video transcript
         async def vid_transcribe():
-            return video_caption(video_path)
+            return await video_caption(video_path)
         
         transcript, video_transcript = await asyncio.gather(transcribe(), vid_transcribe())
 

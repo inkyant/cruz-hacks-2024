@@ -1,6 +1,7 @@
 import asyncio
 import re
 from flask import Blueprint, jsonify, request
+import time
 
 from .snopes_check import query_snopes
 from .captions import get_captions
@@ -10,6 +11,7 @@ routes = Blueprint("routes", __name__)
 
 @routes.route("/api/fact-check", methods=['POST'])
 def fact_check():
+    start = time.time()
     url = request.get_json()
 
     if not url:
@@ -34,12 +36,15 @@ def fact_check():
     match = re.match(r'(.+?)\n\n?Search Terms:(.+)', s)
     if (match is None):
         print("Error on match regex")
-        return jsonify({"summary": s, "terms": "", "description": metadata["description"], "date": metadata["date"]})
+        end = time.time()
+        print(f"Runtime: {end-start} seconds")
+        return jsonify({"summary": s, "terms": ""})
     
     search_terms = match.group(2)  
     search_terms = search_terms.replace(",", "")
 
     article_selected = ""
+    article_link = ""
 
     if search_terms and not (re.match(r'.*N/A.*', search_terms) or re.match(r'.*None.*', search_terms)):
         
@@ -66,6 +71,9 @@ def fact_check():
 
         if article_id is not None and article_id != -1:
             article_selected = articles[article_id]["title"]
+            article_link = articles[article_id]["link"]
+    end = time.time()
+    print(f"Runtime: {end-start} seconds")
         
-    return jsonify({"summary": match.group(1), "snopes": article_selected})
+    return jsonify({"summary": match.group(1), "snopes": article_selected, "snopes_link": article_link})
     

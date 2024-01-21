@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState } from "react";
-import { TikTokEmbed } from 'react-social-media-embed';
+// import { TikTokEmbed } from 'react-social-media-embed';
 import { RotatingLines } from "react-loader-spinner";
 
 function Loader() {
@@ -31,6 +31,7 @@ function App() {
 
   const [infoString, setInfoString] = useState("");
   const [snopesString, setSnopesString] = useState("");
+  const [snopesLink, setSnopesLink] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -49,6 +50,7 @@ function App() {
     .then(data => {
       setInfoString(data.summary)
       setSnopesString(data.snopes)
+      setSnopesLink(data.snopes_link)
       setLoading(false)
     })
     .catch(err => console.log(err));
@@ -75,10 +77,12 @@ function App() {
             <TikTokEmbed url={parseUrl(urlString)} width={325} />
           </div> */}
           <div className="outbx" style={{display: infoString == "" ? "none" : ""}}>
-            {loading ? <Loader/> : <p className="outtxt" id="demo">{infoString}</p>}
+            {loading ? <Loader/> : <p className="outtxt" id="demo"><h2><b>Results</b></h2>{infoString}</p>}
           </div>
           <div className="outbx" style={{display: snopesString == "" ? "none" : ""}}>
+            <h2><b>Related article</b></h2>
             <p className="outtxt">{snopesString}</p>
+            <a className="outtxt" href={snopesLink}>{snopesLink}</a>
           </div>
           
           </div>

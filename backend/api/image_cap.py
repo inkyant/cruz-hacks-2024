@@ -6,6 +6,10 @@ import replicate
 import cloudinary.uploader
 import os
 import cv2
+import asyncio
+from functools import partial
+import threading
+import time
 
 import cloudinary
           
@@ -30,53 +34,68 @@ def extractImages(pathIn, i):
         cv2.imwrite("./frame%d.jpg" % count, image)
         count = count + 1
 
+def process_frame(i, rand_id, data):
+    # upload to CDN
+    public_id = str(rand_id) + "_frame" + str(i)
+    cloudinary.uploader.upload("./frame%d.jpg" % i, public_id = public_id)
+    print("Running")
 
-def video_caption(path):
+    # AI Analysis
+    output = replicate.run(
+        "yorickvp/llava-13b:e272157381e2a3bf12df3a8edd1f38d1dbd736bbb7437277c8b34175f8fce358",
+        input={
+            "image": "https://res.cloudinary.com/" + CDN_CLOUD_NAME + "/image/upload/f_auto,q_auto/" + public_id,
+            "prompt": "Describe what is occuring in this frame from a video." + data["context"]
+        }
+    )
+
+    # for next analysis, include context
+    if data["context"] == "":
+        data["context"] = " Here are descriptions of the previous frames: \n"
+
+    # The yorickvp/llava-13b model can stream output as it's running.
+    # The predict method returns an iterator, and you can iterate over that output.
+    output = ''.join(output)
+
+    # add context, update description
+    data["context"] += output + "\n"
+    print("="*6)
+    print(data["context"])
+    print("="*6)
+    data["final_description"] = output
+
+    # delete images once we're done with them
+    os.remove("./frame%d.jpg" % i)
+    cloudinary.uploader.destroy(public_id)
+    # Indicate that the thread is done running
+    data["status"][i] = 1
+
+async def video_caption(path):
 
     # convert video to images
     num_images = 3
     extractImages(path, num_images)
 
-    final_description = ""
-    context = ""
+    # final_description = ""
+    # context = ""
+
+    data = {"final_description": "", "context": "", "status": [0 for _ in range(num_images)]}
+    threads = []
 
     rand_id = randint(0, 999)
-
     for i in range(num_images):
-        
-        # upload to CDN
-        public_id = str(rand_id) + "_frame" + str(i)
-        cloudinary.uploader.upload("./frame%d.jpg" % i, public_id = public_id)
+        # process_frame(i, rand_id, data)
+        threads.append(threading.Thread(target=process_frame, args=(i, rand_id, data)))
+    
+    for thread in threads:
+        thread.start()
+    
+    # Wait until all threads are finished running
+    while 0 in data["status"]:
+        time.sleep(0.1)
 
-        # AI Analysis
-        output = replicate.run(
-            "yorickvp/llava-13b:e272157381e2a3bf12df3a8edd1f38d1dbd736bbb7437277c8b34175f8fce358",
-            input={
-                "image": "https://res.cloudinary.com/" + CDN_CLOUD_NAME + "/image/upload/f_auto,q_auto/" + public_id,
-                "prompt": "Describe what is occuring in this frame from a video." + context
-            }
-        )
-
-        # for next analysis, include context
-        if context == "":
-            context = " Here are descriptions of the previous frames: \n"
-
-        # The yorickvp/llava-13b model can stream output as it's running.
-        # The predict method returns an iterator, and you can iterate over that output.
-        output = ''.join(output)
-
-        # add context, update description
-        context += output + "\n"
-        print("="*6)
-        print(context)
-        print("="*6)
-        final_description = output
-
-        # delete images once we're done with them
-        os.remove("./frame%d.jpg" % i)
-        cloudinary.uploader.destroy(public_id)
-
-    return final_description
+    # return final_description
+    return data["final_description"]
 
 
 if __name__ == "__main__":
