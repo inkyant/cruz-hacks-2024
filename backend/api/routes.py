@@ -27,7 +27,7 @@ def fact_check():
     match = re.match(r'(.+?)\n\n?Search Terms:(.+)', s)
     if (match is None):
         print("Error on match regex")
-        return jsonify({"summary": s, "terms": ""})
+        return jsonify({"summary": s, "terms": "", "description": metadata["description"], "date": metadata["date"]})
     
     search_terms = match.group(2)  
     search_terms = search_terms.replace(",", "")
