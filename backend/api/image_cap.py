@@ -34,7 +34,7 @@ def extractImages(pathIn, i):
 def video_caption(path):
 
     # convert video to images
-    num_images = 5
+    num_images = 3
     extractImages(path, num_images)
 
     final_description = ""
