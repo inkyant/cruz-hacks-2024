@@ -20,5 +20,5 @@ def fact_check():
     if (match is None):
         print("Error on  match regex")
         return jsonify({"summary": s, "terms": ""})
-    return jsonify({"summary": match.group(1), "terms": match.group(1)})
+    return jsonify({"summary": match.group(1), "terms": match.group(2)})
 
